@@ -1,19 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react"; 
+import { Menu, X } from "lucide-react";
+import { useFetchCategories } from "@/lib/fetchCategories";
+
 interface SidebarProps {
   onCategorySelect: (category: string) => void;
   onPriceFilter: (priceRange: string) => void; 
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) => {
-  const [isOpen, setIsOpen] = useState(true);  
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);  
-  const [isCategoryOpen, setIsCategoryOpen] = useState(true);  
-  const [isPriceRangeOpen, setIsPriceRangeOpen] = useState(true); 
+  const [isOpen, setIsOpen] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(true);
+  const [isPriceRangeOpen, setIsPriceRangeOpen] = useState(true);
 
-  const [categories, setCategories] = useState<string[]>([]);
- 
+  // Use the custom hook for fetching categories
+  const { categories, loading, error } = useFetchCategories();
+
   const priceRanges = [
     { label: "All Prices", value: "" },
     { label: "$0 - $50", value: "0-50" },
@@ -21,15 +24,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) =>
     { label: "$101 - $200", value: "101-200" },
     { label: "$201+", value: "201+" },
   ];
-
-  useEffect(() => {
-     const fetchCategories = async () => {
-      const response = await fetch("https://fakestoreapi.com/products/categories");
-      const data = await response.json();
-      setCategories(["All Categories", ...data]); 
-    };
-    fetchCategories();
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) =>
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     if (windowWidth < 640) {
       setIsOpen(false);
     }
@@ -55,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) =>
       >
         <button
           onClick={() => setIsOpen(false)}
-          className="p-1 bg-[#fffbf0]  rounded text-2xl bold absolute top-1 right-1"
+          className="p-1 bg-[#fffbf0] rounded text-2xl bold absolute top-1 right-1"
         >
           <X className="text-2xl" />
         </button>
@@ -75,22 +69,27 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) =>
 
             {isCategoryOpen && (
               <ul className="mt-2 pl-4 space-y-2">
-                {categories.map((category, index) => (
-                  <li key={index}>
-                    <button
-                      className="hover:text-[#008080] text-[#36454f]"
-                      onClick={() => onCategorySelect(category)}
-                    >
-                      {category}
-                    </button>
-                  </li>
-                ))}
+                {loading ? (
+                  <li>Loading...</li>
+                ) : error ? (
+                  <li>{error}</li>
+                ) : (
+                  categories.map((category, index) => (
+                    <li key={index}>
+                      <button
+                        className="hover:text-[#008080] text-[#36454f]"
+                        onClick={() => onCategorySelect(category)}
+                      >
+                        {category}
+                      </button>
+                    </li>
+                  ))
+                )}
               </ul>
             )}
           </div>
 
           {/* Price Range Dropdown */}
-
           <div className="mt-4">
             <button
               onClick={() => setIsPriceRangeOpen(!isPriceRangeOpen)}
@@ -103,26 +102,25 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) =>
             {isPriceRangeOpen && (
               <ul className="mt-2 pl-4 space-y-2">
                 {priceRanges.map((range) => (
-                <li key={range.value}>
-                  <button
-                    className={`hover:text-[#008080] text-[#36454f]`}
-                    onClick={() => onPriceFilter(range.value)}
-                  >
-                    {range.label}
-                  </button>
-                </li>
-              ))}
+                  <li key={range.value}>
+                    <button
+                      className={`hover:text-[#008080] text-[#36454f]`}
+                      onClick={() => onPriceFilter(range.value)}
+                    >
+                      {range.label}
+                    </button>
+                  </li>
+                ))}
               </ul>
             )}
           </div>
-
         </div>
       </div>
 
       {/* Menu Button */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}  
+          onClick={() => setIsOpen(true)}
           className="p-1 bg-[#36454f] text-white rounded transition-all duration-300 absolute top-0 left-0 z-50"
         >
           <Menu className="text-2xl" />

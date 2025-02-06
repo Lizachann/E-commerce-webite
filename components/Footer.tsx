@@ -3,9 +3,9 @@ import { Phone, Mail, MapPin, Facebook, Twitter, Instagram } from "lucide-react"
 const Footer = () => {
   return (
     <footer className="bg-[#fffbf0] shadow-lg py-6 px-8 w-full mt-10 z-20">
-      <div className="container mx-auto flex justify-between items-start space-x-10">
+      <div className="container mx-auto flex justify-between items-start space-x-10 sm:flex-col ">
         {/* Contact Us */}
-        <div className="flex-1 text-left ">
+        <div className="flex-1 text-left md:mb-10 ">
           <p className="font-bold text-[#8b374d] mb-2 text-lg">Contact Us</p>
           <div className="flex items-center text-[#36454f] mb-2">
             <Phone className="mr-2" />
@@ -31,7 +31,7 @@ const Footer = () => {
         </div>
 
         {/* Social Media */}
-        <div className="flex-1  pl-40">
+        <div className="flex-1 text-left">
           <p className="font-bold text-[#8b374d] mb-2 text-lg">Follow Us</p>
           <div className="flex flex-col ">
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-[#ff2a61] mb-2 text-[#36454f]">
