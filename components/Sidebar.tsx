@@ -1,84 +1,35 @@
-// "use client";
-// import React, { useEffect, useState } from "react";
-// import { Menu, X } from "lucide-react"; // Import Lucide icons
-
-
-
-// const Sidebar: React.FC = () => {
-//   const [isOpen, setIsOpen] = useState(true); // Sidebar initially closed
-
-
-//   const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Track window width
-
-//   useEffect(() => {
-//     const handleResize = () => {
-//       setWindowWidth(window.innerWidth);
-//     };
-
-//     window.addEventListener("resize", handleResize);
-//     return () => window.removeEventListener("resize", handleResize);
-//   }, []);
-
-//   // Close the sidebar if the window width is less than lg or md
-//   useEffect(() => {
-//     if (windowWidth < 640) { 
-//       setIsOpen(false);
-//     } else {
-//       setIsOpen(true);
-//     }
-//   }, [windowWidth]);
-
-
-//   return (
-//     <div className="relative w-full">
-//       {/* Sidebar Content */}
-//       <div
-//         className={`transition-all duration-300 overflow-hidden ${
-//           isOpen ? "w-96 md:w-80 p-4 bg-gray-200 border rounded-lg" : "w-0"
-//         }`}
-//       >
-//         {/* Close Button inside the sidebar (X) */}
-//         <button
-//           onClick={() => setIsOpen(false)}
-//           className="p-1 bg-gray-200 text-white rounded text-2xl bold absolute top-0 right-0"
-//         >
-//           <X className="text-2xl" />
-//         </button>
-//         <div>
-//         <p>E-COmmws</p>
-//         <p>E-COmmws</p>
-//         </div>
-        
-//       </div>
-
-//       {/* Menu Button (Hamburger Icon) */}
-//       {!isOpen && ( // Only show the Menu button if the sidebar is closed
-//         <button
-//           onClick={() => setIsOpen(true)} // Open the sidebar when clicked
-//           className="p-1 bg-gray-200 text-white rounded transition-all duration-300 absolute top-0 left-0 z-50 "
-//         >
-//           <Menu className="text-2xl" />
-//         </button>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
-
-
-
 "use client";
-import React, { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react"; // Import Lucide icons
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react"; 
+interface SidebarProps {
+  onCategorySelect: (category: string) => void;
+  onPriceFilter: (priceRange: string) => void; 
+}
 
+const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) => {
+  const [isOpen, setIsOpen] = useState(true);  
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);  
+  const [isCategoryOpen, setIsCategoryOpen] = useState(true);  
+  const [isPriceRangeOpen, setIsPriceRangeOpen] = useState(true); 
 
+  const [categories, setCategories] = useState<string[]>([]);
+ 
+  const priceRanges = [
+    { label: "All Prices", value: "" },
+    { label: "$0 - $50", value: "0-50" },
+    { label: "$51 - $100", value: "51-100" },
+    { label: "$101 - $200", value: "101-200" },
+    { label: "$201+", value: "201+" },
+  ];
 
-const Sidebar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false); // Sidebar initially closed
-
-
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Track window width
+  useEffect(() => {
+     const fetchCategories = async () => {
+      const response = await fetch("https://fakestoreapi.com/products/categories");
+      const data = await response.json();
+      setCategories(["All Categories", ...data]); 
+    };
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -89,51 +40,90 @@ const Sidebar: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Close the sidebar if the window width is less than lg or md
-  useEffect(() => {
-    if (windowWidth < 640) { 
+   useEffect(() => {
+    if (windowWidth < 640) {
       setIsOpen(false);
-    
     }
   }, [windowWidth]);
 
-
   return (
-    <div className="relative w-full">
-      {/* Sidebar Content */}
+    <div className="relative w-full h-full">
       <div
         className={`transition-all duration-300 overflow-hidden ${
-          isOpen ? "w-96 md:w-80 p-4 bg-gray-200 border rounded-lg" : "w-0"
+          isOpen ? "w-96 h-full md:w-80 p-4 bg-[#fffbf0] border rounded-lg" : "w-0"
         }`}
       >
-        {/* Close Button inside the sidebar (X) */}
         <button
           onClick={() => setIsOpen(false)}
-          className="p-1 bg-gray-200 text-white rounded text-2xl bold absolute top-0 right-0"
+          className="p-1 bg-[#fffbf0]  rounded text-2xl bold absolute top-1 right-1"
         >
           <X className="text-2xl" />
         </button>
+
         <div>
-        <p>E-COmmws</p>
-        <p>E-COmmws</p>
-        <p>E-COmmws</p>
-        <p>E-COmmws</p>
+          <p className="font-bold text-2xl text-[#e8597e] hover:text-[#ff2a61]">Filter By:</p>
 
-        <p>E-COmmws</p>
+          {/* Category Dropdown */}
+          <div className="mt-4">
+            <button
+              onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+              className="w-full text-left font-semibold flex items-center justify-between"
+            >
+              <span className="text-lg text-[#8b374d] hover:text-[#ff2a61]">Categories</span>
+              <span>{isCategoryOpen ? "▲" : "▼"}</span>
+            </button>
 
-        <p>E-COmmws</p>
+            {isCategoryOpen && (
+              <ul className="mt-2 pl-4 space-y-2">
+                {categories.map((category, index) => (
+                  <li key={index}>
+                    <button
+                      className="hover:text-[#008080] text-[#36454f]"
+                      onClick={() => onCategorySelect(category)}
+                    >
+                      {category}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
+          {/* Price Range Dropdown */}
 
+          <div className="mt-4">
+            <button
+              onClick={() => setIsPriceRangeOpen(!isPriceRangeOpen)}
+              className="w-full text-left font-semibold flex items-center justify-between"
+            >
+              <span className="text-lg text-[#8b374d] hover:text-[#ff2a61]">Price Ranges</span>
+              <span>{isPriceRangeOpen ? "▲" : "▼"}</span>
+            </button>
+
+            {isPriceRangeOpen && (
+              <ul className="mt-2 pl-4 space-y-2">
+                {priceRanges.map((range) => (
+                <li key={range.value}>
+                  <button
+                    className={`hover:text-[#008080] text-[#36454f]`}
+                    onClick={() => onPriceFilter(range.value)}
+                  >
+                    {range.label}
+                  </button>
+                </li>
+              ))}
+              </ul>
+            )}
+          </div>
 
         </div>
-        
       </div>
 
-      {/* Menu Button (Hamburger Icon) */}
-      {!isOpen && ( // Only show the Menu button if the sidebar is closed
+      {/* Menu Button */}
+      {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)} // Open the sidebar when clicked
-          className="p-1 bg-gray-200 text-white rounded transition-all duration-300 absolute top-0 left-0 z-50 "
+          onClick={() => setIsOpen(true)}  
+          className="p-1 bg-[#36454f] text-white rounded transition-all duration-300 absolute top-0 left-0 z-50"
         >
           <Menu className="text-2xl" />
         </button>

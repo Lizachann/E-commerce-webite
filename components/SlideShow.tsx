@@ -1,5 +1,5 @@
 'use client';
-
+import React from 'react';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
@@ -9,7 +9,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, imageWidth, imageHeight }
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change slide every 3 seconds
+    }, 3000);  
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -35,7 +35,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, imageWidth, imageHeight }
               layout="intrinsic" 
               width={imageWidth} 
               height={imageHeight}
-              objectFit="cover" 
+              objectFit="fit" 
             />
           </div>
         ))}

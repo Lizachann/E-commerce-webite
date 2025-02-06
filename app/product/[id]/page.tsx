@@ -6,6 +6,7 @@ import { Heart, Minus, Plus, ShoppingCart, Star, ArrowLeft } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext';
 import { fetchProducts } from '@/lib/fetchProducts'; 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'; 
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -15,6 +16,8 @@ const ProductPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [num, setNum] = useState(1);  
+ const router = useRouter();  
+  
 
   const productId = Array.isArray(id) ? id[0] : id;
 
@@ -70,10 +73,13 @@ const ProductPage = () => {
   return (
     <div className="container mx-auto p-8">
       <div className="flex flex-col md:flex-row items-center gap-8">
-        <Link href="/" className=" pt-12 pl-3 lg:pt-24 text-white rounded transition-all duration-300 absolute top-10 left-0 z-50 ">
-          <ArrowLeft size={24} className="text-[#36454f]" />
-        </Link>
-
+   
+        <button
+        onClick={() => router.back()}
+        className="pt-12 pl-3 lg:pt-24 text-white rounded transition-all duration-300 absolute top-10 left-0 z-50 "
+      >
+        <ArrowLeft size={24} className="text-[#36454f]" />
+      </button>
         <div className="w-full md:w-1/2 relative h-[600px]">
           <button onClick={handleToggleWishlist} className="absolute top-1 right-1 bg-[#fffbf0] rounded-full p-1 shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none z-10">
             <Heart size={24} className={`transition-all duration-300 ease-in-out transform ${isWishlisted ? 'fill-[#e8597e] text-[#e8597e] scale-110' : 'text-[#8b374d] scale-100'}`} />

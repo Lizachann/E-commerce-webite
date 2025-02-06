@@ -28,7 +28,7 @@ const Header = () => {
           <Search className="absolute left-3 top-2.5 text-gray-700" size={18} />
         </div>
 
-        {/* Cart & Login/Register */}
+        {/* Cart/wish/Login/Register */}
         <div className="flex items-center gap-8">
         <Link href={`/wishlist`} passHref>
         <button className="text-[#36454f] hover:text-[#008080] focus:outline-none relative">

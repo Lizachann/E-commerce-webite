@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { useCart } from '@/contexts/CartContext';
-import { Heart, Minus, Plus, Trash, Trash2 } from 'lucide-react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 
 interface CartItemProps {
   product: ProductCardProps;
@@ -24,7 +25,8 @@ const CartItem: React.FC<CartItemProps> = ({ product }) => {
       </button>
 
       {/* Product Image */}
-      <div className="flex-shrink-0">
+      <Link href={`/product/${product.id}`} passHref>
+            <div className="flex-shrink-0">
         <Image
           src={product.image}
           alt={product.title}
@@ -34,6 +36,8 @@ const CartItem: React.FC<CartItemProps> = ({ product }) => {
         />
       </div>
 
+      </Link>
+    
       {/* Product Info */}
       <div className="ml-4 flex-1">
         <h3 className="text-lg font-semibold">{product.title}</h3>

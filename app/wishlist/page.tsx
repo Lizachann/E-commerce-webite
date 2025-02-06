@@ -5,11 +5,12 @@ import { ArrowLeft, HeartCrack } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchProducts } from "@/lib/fetchProducts";
 import ProductCard from "@/components/ProductCard";
-import Link from "next/link";  // Ensure the correct import for Link
+import { useRouter } from 'next/navigation'; 
 
 const WishList = () => {
   const { productCounts, wishlist, totalCartCount, updateCartCount, toggleWishlist } = useCart();
   const [products, setProducts] = useState<ProductCardProps[]>([]);
+  const router = useRouter();  
 
   useEffect(() => {
     const getProducts = async () => {
@@ -21,10 +22,12 @@ const WishList = () => {
 
   return (
     <div className=" px-10">
-      <Link href="/" className="pt-4 pl-3 text-white rounded transition-all duration-300 absolute left-0 z-50">
+      <button
+        onClick={() => router.back()}
+        className="pt-4 pl-3 text-white rounded transition-all duration-300 absolute left-0 z-50"
+      >
         <ArrowLeft size={24} className="text-[#36454f]" />
-      </Link>
-
+      </button>
       <h2 className="pt-10 text-4xl font-bold text-[#ff2a61] mb-10">Wishlist</h2>
 
       {wishlist.length > 0 ? (
