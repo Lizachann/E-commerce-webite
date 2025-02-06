@@ -20,8 +20,6 @@
     
     interface SlideShowProps {
       images: string[]; 
-      imageWidth: number;  
-      imageHeight: number;  
     }
 
     interface CartContextType {

@@ -121,7 +121,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) =>
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="p-1 bg-[#36454f] text-white rounded transition-all duration-300 absolute top-0 left-0 z-50"
+          className="p-1 ml-1 bg-[#36454f] text-white rounded transition-all duration-300 absolute top-0 left-0 z-50"
         >
           <Menu className="text-2xl" />
         </button>

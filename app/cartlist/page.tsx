@@ -24,7 +24,7 @@ const CartList: React.FC = () => {
   const total = subtotal - discount + deliveryFee;
   
   return (
-    <div className="cart-page px-10">
+    <div className="cart-page px-4 sm:px-10">
       <button
         onClick={() => router.back()}
         className="pt-4 pl-3 text-white rounded transition-all duration-300 absolute left-0 z-50"
@@ -38,15 +38,15 @@ const CartList: React.FC = () => {
           <p className="text-lg font-semibold">Your Cart is empty.</p>
         </div>
       ) : (
-        <div className="flex gap-6 justify-between">
-          <div className="w-[70%] flex flex-col space-y-4">
+        <div className="flex flex-col lg:flex-row gap-6 justify-between">
+          <div className="w-full lg:w-[70%] flex flex-col space-y-4">
             {cartItems.map((product) => (
               <CartItem key={product.id} product={product} />
             ))}
           </div>
 
           {/* Order Summary Breakdown */}
-          <div className="order-breakdown bg-white p-6 rounded-lg shadow-md mb-6 w-[30%]">
+          <div className="order-breakdown bg-white p-6 rounded-lg shadow-md mb-6 w-full lg:w-[30%]">
             <div className="flex justify-between items-center py-2 border-b border-gray-300">
               <p className="text-sm text-gray-700">Subtotal</p>
               <p className="text-sm font-semibold text-gray-900">${subtotal.toFixed(2)}</p>

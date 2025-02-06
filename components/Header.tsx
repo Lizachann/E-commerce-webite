@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { ShoppingCart, Search, Heart } from "lucide-react";
 import Image from "next/image";
@@ -9,6 +9,20 @@ import Link from "next/link";
 const Header = () => {
   const { totalCartCount } = useCart();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+ 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);  
+    };
+
+     handleResize();
+
+     window.addEventListener("resize", handleResize);
+
+     return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handlePopup = () => {
     setIsPopupOpen(true);
@@ -19,7 +33,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-md py-3 px-3 top-0 left-0 w-full z-50 ">
+    <header className="bg-white shadow-md py-3 px-3 top-0 left-0 w-full z-50">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="pr-6">
@@ -39,7 +53,7 @@ const Header = () => {
         </div>
 
         {/* Cart/wish/Login/Register */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4">
           <Link href={`/wishlist`} passHref>
             <button className="text-[#36454f] hover:text-[#008080] focus:outline-none relative">
               <Heart size={24} className="transition-all duration-300 ease-in-out transform fill-[#e8597e] text-[#e8597e] scale-110" />
@@ -55,19 +69,50 @@ const Header = () => {
             </button>
           </Link>
 
-          {/* Login and Register buttons */}
-          <button
-            onClick={handlePopup}
-            className="bg-[#008080] text-white px-4 py-2 rounded-lg hover:bg-[#36454F]"
-          >
-            Login
-          </button>
-          <button
-            onClick={handlePopup}
-            className="bg-[#008080] text-white px-4 py-2 rounded-lg hover:bg-[#36454F]"
-          >
-            Register
-          </button>
+          {/* Login and Register buttons (Desktop view) */}
+          <div className="hidden sm:flex items-center gap-4">
+            <button
+              onClick={handlePopup}
+              className="bg-[#008080] text-white px-4 py-2 rounded-lg hover:bg-[#36454F]"
+            >
+              Login
+            </button>
+            <button
+              onClick={handlePopup}
+              className="bg-[#008080] text-white px-4 py-2 rounded-lg hover:bg-[#36454F]"
+            >
+              Register
+            </button>
+          </div>
+
+          {/* Login and Register Dropdown (Mobile view) */}
+          {isMobile && (
+            <div className="relative">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="bg-[#008080] text-white px-4 py-2 rounded-lg hover:bg-[#36454F]"
+              >
+                Account
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute top-12 right-0 bg-white shadow-lg rounded-md w-48 mt-2 p-3">
+                  <button
+                    onClick={handlePopup}
+                    className="w-full text-left text-[#008080] hover:text-[#36454f] py-2"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={handlePopup}
+                    className="w-full text-left text-[#008080] hover:text-[#36454f] py-2"
+                  >
+                    Register
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -76,7 +121,13 @@ const Header = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-100">
           <div className="bg-white p-6 rounded-lg shadow-md text-center">
             <div className="mt-4">
-              <Image src="/images/coming-soon.gif" alt="Coming Soon" className="mx-auto" />
+            <Image
+                src="/images/coming-soon.gif"
+                alt="Coming Soon"
+                className="mx-auto"
+                width={200}  
+                height={200}  
+              />          
             </div>
             <button
               onClick={closePopup}
@@ -86,7 +137,6 @@ const Header = () => {
             </button>
           </div>
         </div>
-      
       )}
     </header>
   );

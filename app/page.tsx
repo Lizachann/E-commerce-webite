@@ -12,9 +12,7 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>('');
   const [isClient, setIsClient] = useState(false);  
-  const images = ['/images/slide1.jpg', '/images/slide2.jpg', '/images/slide3.png', '/images/slide4.jpg'];
-  const imageWidth = 1920;
-  const imageHeight = 750;
+  const images = ['/images/slide1.jpg', '/images/slide2.jpg'];
 
    useEffect(() => {
     setIsClient(true);
@@ -51,7 +49,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <SlideShow images={images} imageWidth={imageWidth} imageHeight={imageHeight} />
+      <SlideShow images={images}   />
       <div className="flex">
         <div>
           <Sidebar 
