@@ -1,56 +1,144 @@
-// components/Sidebar.tsx
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import { Menu, X } from "lucide-react"; // Import Lucide icons
+
+
+
+// const Sidebar: React.FC = () => {
+//   const [isOpen, setIsOpen] = useState(true); // Sidebar initially closed
+
+
+//   const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Track window width
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       setWindowWidth(window.innerWidth);
+//     };
+
+//     window.addEventListener("resize", handleResize);
+//     return () => window.removeEventListener("resize", handleResize);
+//   }, []);
+
+//   // Close the sidebar if the window width is less than lg or md
+//   useEffect(() => {
+//     if (windowWidth < 640) { 
+//       setIsOpen(false);
+//     } else {
+//       setIsOpen(true);
+//     }
+//   }, [windowWidth]);
+
+
+//   return (
+//     <div className="relative w-full">
+//       {/* Sidebar Content */}
+//       <div
+//         className={`transition-all duration-300 overflow-hidden ${
+//           isOpen ? "w-96 md:w-80 p-4 bg-gray-200 border rounded-lg" : "w-0"
+//         }`}
+//       >
+//         {/* Close Button inside the sidebar (X) */}
+//         <button
+//           onClick={() => setIsOpen(false)}
+//           className="p-1 bg-gray-200 text-white rounded text-2xl bold absolute top-0 right-0"
+//         >
+//           <X className="text-2xl" />
+//         </button>
+//         <div>
+//         <p>E-COmmws</p>
+//         <p>E-COmmws</p>
+//         </div>
+        
+//       </div>
+
+//       {/* Menu Button (Hamburger Icon) */}
+//       {!isOpen && ( // Only show the Menu button if the sidebar is closed
+//         <button
+//           onClick={() => setIsOpen(true)} // Open the sidebar when clicked
+//           className="p-1 bg-gray-200 text-white rounded transition-all duration-300 absolute top-0 left-0 z-50 "
+//         >
+//           <Menu className="text-2xl" />
+//         </button>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Sidebar;
+
+
+
 "use client";
+import React, { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react"; // Import Lucide icons
 
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+
+const Sidebar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false); // Sidebar initially closed
+
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Track window width
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Close the sidebar if the window width is less than lg or md
+  useEffect(() => {
+    if (windowWidth < 640) { 
+      setIsOpen(false);
+    
+    }
+  }, [windowWidth]);
+
 
   return (
-    <>
-      {/* Sidebar Toggle Button */}
-      <button
-        className="fixed top-4 left-4 z-50 bg-gray-800 text-white p-2 rounded-md"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
-
-      {/* Sidebar */}
-      <aside
-        className={`fixed top-0 left-0 h-full bg-gray-200 p-4 w-64 shadow-lg transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "-translate-x-64"
+    <div className="relative w-full">
+      {/* Sidebar Content */}
+      <div
+        className={`transition-all duration-300 overflow-hidden ${
+          isOpen ? "w-96 md:w-80 p-4 bg-gray-200 border rounded-lg" : "w-0"
         }`}
       >
-        <h2 className="text-lg font-semibold mb-4">Categories</h2>
-        <ul>
-          <li>
-            <a href="#" className="block py-2 text-gray-700">
-              Category 1
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block py-2 text-gray-700">
-              Category 2
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block py-2 text-gray-700">
-              Category 3
-            </a>
-          </li>
-        </ul>
-      </aside>
-
-      {/* Overlay when sidebar is open */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-40 z-40"
+        {/* Close Button inside the sidebar (X) */}
+        <button
           onClick={() => setIsOpen(false)}
-        ></div>
+          className="p-1 bg-gray-200 text-white rounded text-2xl bold absolute top-0 right-0"
+        >
+          <X className="text-2xl" />
+        </button>
+        <div>
+        <p>E-COmmws</p>
+        <p>E-COmmws</p>
+        <p>E-COmmws</p>
+        <p>E-COmmws</p>
+
+        <p>E-COmmws</p>
+
+        <p>E-COmmws</p>
+
+
+
+        </div>
+        
+      </div>
+
+      {/* Menu Button (Hamburger Icon) */}
+      {!isOpen && ( // Only show the Menu button if the sidebar is closed
+        <button
+          onClick={() => setIsOpen(true)} // Open the sidebar when clicked
+          className="p-1 bg-gray-200 text-white rounded transition-all duration-300 absolute top-0 left-0 z-50 "
+        >
+          <Menu className="text-2xl" />
+        </button>
       )}
-    </>
+    </div>
   );
 };
 

@@ -1,28 +1,142 @@
 module.exports = {
 
-"[project]/app/page.tsx [app-rsc] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
+"[project]/app/page.tsx [app-rsc] (ecmascript)": (function(__turbopack_context__) {
 
-var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
+var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, m: module, e: exports, t: __turbopack_require_real__ } = __turbopack_context__;
 {
-// import Image from "next/image";
-__turbopack_esm__({
-    "default": (()=>HomePage)
-});
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
-;
-function HomePage() {
-    return(//  <main>
-    //   <h1> hello world </h1>
-    //   <Link href="/users"> Users</Link>
-    //   {/* <ProductCard/> */}
-    //  </main>
-    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {}, void 0, false, {
-        fileName: "[project]/app/page.tsx",
-        lineNumber: 13,
-        columnNumber: 3
-    }, this));
-}
+// 'use client';
+// import { useEffect, useState } from "react";
+// import ProductCard from "@/components/ProductCard";
+// import Sidebar from "@/components/Sidebar";
+// import SlideShow from "@/components/SlideShow";
+// const HomePage = () => {
+//   const [products, setProducts] = useState<ProductCardProps[]>([]);
+//   const [productCounts, setProductCounts] = useState<{ [key: number]: ProductCount }>({});
+//   const [wishlist, setWishlist] = useState<ProductCardProps[]>([]);
+//   const [cartItems, setCartItems] = useState<ProductCardProps[]>([]); // Track cart items
+//   const totalCartCount = Object.values(productCounts).reduce(
+//     (total, { cartCount }) => total + cartCount,
+//     0
+//   );
+//   useEffect(() => {
+//     const fetchProducts = async () => {
+//       const res = await fetch("https://fakestoreapi.com/products");
+//       const data: ProductCardProps[] = await res.json();
+//       setProducts(data);
+//     };
+//     fetchProducts();
+//   }, []);
+//   const updateCartCount = (id: number, product: ProductCardProps) => {
+//     setProductCounts((prevCounts) => ({
+//       ...prevCounts,
+//       [id]: {
+//         cartCount: (prevCounts[id]?.cartCount || 0) + 1,
+//       },
+//     }));
+//     // Add item to cart items list if not already there
+//     setCartItems((prevCartItems) => {
+//       const isItemInCart = prevCartItems.some(item => item.id === id);
+//       if (!isItemInCart) {
+//         return [...prevCartItems, product];
+//       }
+//       return prevCartItems;
+//     });
+//   };
+//   const toggleWishlist = (product: ProductCardProps) => {
+//     setWishlist((prevWishlist) => {
+//       const isInWishlist = prevWishlist.some((item) => item.id === product.id);
+//       if (isInWishlist) {
+//         return prevWishlist.filter((item) => item.id !== product.id); // Remove from wishlist
+//       } else {
+//         return [...prevWishlist, product]; // Add to wishlist
+//       }
+//     });
+//   };
+//   return (
+//     <div>
+//       <SlideShow />
+//       <div className="flex">
+//         <div>
+//           <Sidebar />
+//         </div>
+//         <div className="transition-all duration-300 w-full">
+//           <div className="flex justify-center items-center min-h-screen">
+//             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 w-full mx-auto px-10">
+//               {products.map((product) => (
+//                 <div key={product.id} className="product-item">
+//                   <ProductCard
+//                     id={product.id}
+//                     image={product.image}
+//                     title={product.title}
+//                     price={product.price}
+//                     rating={product.rating}
+//                     onAddToCart={() => updateCartCount(product.id, product)}
+//                     onToggleWishlist={() => toggleWishlist(product)}
+//                     cartCount={productCounts[product.id]?.cartCount || 0}
+//                     isWishlisted={wishlist.some((item) => item.id === product.id)}
+//                     totalCartCount={totalCartCount}
+//                   />
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//       {/* Cart Items Section */}
+//       <div className="mt-10 px-10">
+//         <h2 className="text-2xl font-bold">Items in Cart</h2>
+//         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+//           {cartItems.length > 0 ? (
+//             cartItems.map((product) => (
+//               <div key={product.id}>
+//                 <ProductCard
+//                   id={product.id}
+//                   image={product.image}
+//                   title={product.title}
+//                   price={product.price}
+//                   rating={product.rating}
+//                   onAddToCart={() => updateCartCount(product.id, product)}
+//                   onToggleWishlist={() => toggleWishlist(product)}
+//                   cartCount={productCounts[product.id]?.cartCount || 0}
+//                   isWishlisted={wishlist.some((item) => item.id === product.id)}
+//                   totalCartCount={totalCartCount}
+//                 />
+//               </div>
+//             ))
+//           ) : (
+//             <p className="text-gray-500">Your cart is empty.</p>
+//           )}
+//         </div>
+//       </div>
+//       {/* Wishlist Section */}
+//       <div className="mt-10 px-10">
+//         <h2 className="text-2xl font-bold">Wishlist</h2>
+//         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+//           {wishlist.length > 0 ? (
+//             wishlist.map((product) => (
+//               <ProductCard
+//                 key={product.id}
+//                 id={product.id}
+//                 image={product.image}
+//                 title={product.title}
+//                 price={product.price}
+//                 rating={product.rating}
+//                 onAddToCart={() => updateCartCount(product.id, product)}
+//                 onToggleWishlist={() => toggleWishlist(product)}
+//                 cartCount={productCounts[product.id]?.cartCount || 0}
+//                 isWishlisted={true}
+//                 totalCartCount={totalCartCount}
+//               />
+//             ))
+//           ) : (
+//             <p className="text-gray-500">Your wishlist is empty.</p>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+// export default HomePage;
 }}),
 "[project]/app/page.tsx [app-rsc] (ecmascript, Next.js server component)": ((__turbopack_context__) => {
 
