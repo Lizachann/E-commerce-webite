@@ -20,23 +20,32 @@ const ProductPage = () => {
   
 
   const productId = Array.isArray(id) ? id[0] : id;
-
   useEffect(() => {
     if (!productId) {
       setError("Product ID is missing");
       setLoading(false);
       return;
     }
-
+  
     const fetchProductData = async () => {
       setLoading(true);
       setError(null);
+  
       try {
         const products = await fetchProducts();
-        const foundProduct = products.find((product) => product.id === parseInt(productId));
+        console.log("Fetched products:", products);  
+  
+        if (!Array.isArray(products)) {
+          throw new Error("Invalid product data received");
+        }
+  
+        const foundProduct = products.find((p) => p.id === parseInt(productId));
+        console.log("Found product:", foundProduct); 
+  
         if (!foundProduct) {
           throw new Error("Product not found");
         }
+  
         setProduct(foundProduct);
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -44,12 +53,14 @@ const ProductPage = () => {
         } else {
           setError("An unknown error occurred");
         }
+      } finally {
+        setLoading(false);
       }
-      
     };
-
-    fetchProductData(); 
+  
+    fetchProductData();
   }, [productId]);
+
 
   useEffect(() => {
     if (product) {
