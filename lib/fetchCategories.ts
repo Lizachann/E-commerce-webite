@@ -1,13 +1,13 @@
-
 import { useState, useEffect } from "react";
 
 export const useFetchCategories = () => {
   const [categories, setCategories] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);  
 
   useEffect(() => {
     const fetchCategories = async () => {
+      setLoading(true);  
       try {
         const response = await fetch("https://fakestoreapi.com/products/categories");
         if (!response.ok) {
@@ -16,11 +16,13 @@ export const useFetchCategories = () => {
         const data = await response.json();
         setCategories(["All Categories", ...data]);
       } catch (error) {
+        console.error("Error fetching categories:", error);
         setError("Failed to fetch categories");
       } finally {
-        setLoading(false);
+        setLoading(false); // Ensure loading is set to false after fetching
       }
     };
+
     fetchCategories();
   }, []);
 
