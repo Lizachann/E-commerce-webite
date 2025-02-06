@@ -2,7 +2,7 @@ import { Phone, Mail, MapPin, Facebook, Twitter, Instagram } from "lucide-react"
 
 const Footer = () => {
   return (
-    <footer className="bg-[#fffbf0] shadow-lg py-6 px-8 w-full mt-10 z-50">
+    <footer className="bg-[#fffbf0] shadow-lg py-6 px-8 w-full mt-10 z-20">
       <div className="container mx-auto flex justify-between items-start space-x-10">
         {/* Contact Us */}
         <div className="flex-1 text-left ">

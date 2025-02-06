@@ -73,7 +73,7 @@ const Header = () => {
 
       {/* Coming Soon Popup */}
       {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-100">
           <div className="bg-white p-6 rounded-lg shadow-md text-center">
             <div className="mt-4">
               <img src="/images/coming-soon.gif" alt="Coming Soon" className="mx-auto" />
