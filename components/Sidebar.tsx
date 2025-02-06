@@ -14,8 +14,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) =>
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const [isPriceRangeOpen, setIsPriceRangeOpen] = useState(true);
 
-  // Use the custom hook for fetching categories
-  const { categories, loading, error } = useFetchCategories();
+   const { categories, loading, error } = useFetchCategories();
 
   const priceRanges = [
     { label: "All Prices", value: "" },
@@ -44,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onCategorySelect, onPriceFilter }) =>
     <div className="relative w-full h-full">
       <div
         className={`transition-all duration-300 overflow-hidden ${
-          isOpen ? "w-96 h-full md:w-80 p-4 bg-[#fffbf0] border rounded-lg" : "w-0"
+          isOpen ? "w-64 h-full md:w-80 p-4 bg-[#fffbf0] border rounded-lg" : "w-0"
         }`}
       >
         <button
