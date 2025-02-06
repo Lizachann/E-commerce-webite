@@ -38,11 +38,14 @@ const ProductPage = () => {
           throw new Error("Product not found");
         }
         setProduct(foundProduct);
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("An unknown error occurred");
+        }
       }
+      
     };
 
     fetchProductData(); 
@@ -54,15 +57,19 @@ const ProductPage = () => {
     }
   }, [product, wishlist]);
 
-  if (loading) return <div className="text-center mt-10 text-lg">Loading product...</div>;
-  if (error) return <div className="text-center mt-10 text-lg text-red-500">{error}</div>;
+  if (loading) return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+    </div>
+  );
+    if (error) return <div className="text-center mt-10 text-lg text-red-500">{error}</div>;
   if (!product) return <div className="text-center mt-10 text-lg text-red-500">Product not found.</div>;
 
   const handleIncrease = () => setNum((prev) => prev + 1);
   const handleDecrease = () => setNum((prev) => (prev > 1 ? prev - 1 : 1));  
   const handleAddToCart = () => {
-    updateCartCount(product, num);  
-    setNum(1);   
+      updateCartCount(product, num);
+      setNum(1);
   };
 
   const handleToggleWishlist = () => {

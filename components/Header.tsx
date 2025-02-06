@@ -3,6 +3,7 @@
 
 import { useCart } from "@/contexts/CartContext";
 import { ShoppingCart, Search, Heart } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
@@ -13,7 +14,7 @@ const Header = () => {
         {/* Logo */}
         <div className="pr-6">
         <Link href="/">
-            <img className = "items-center" src="/images/logo.png" alt="Shop Logo" width={180} height={100} />
+            <Image className = "items-center" src="/images/logo.png" alt="Shop Logo" width={180} height={100} />
         </Link>
         </div>
      

@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   cartCount = 0,  
   totalCartCount = 0, 
 }) => {
-  const { productCounts, updateCartCount } = useCart();  
+  const { updateCartCount } = useCart();  
   const [num, setNum] = useState(1);  
 
   const handleAddToCart = () => {

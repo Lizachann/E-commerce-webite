@@ -4,16 +4,21 @@ import ProductCard from "@/components/ProductCard";
 import Sidebar from "@/components/Sidebar";
 import SlideShow from "@/components/SlideShow";
 import { useCart } from "@/contexts/CartContext";
-import { fetchProducts } from "@/lib/fetchProducts";  
+import { fetchProducts } from "@/lib/fetchProducts";
 
 const HomePage = () => {
-  const { productCounts, cartItems, wishlist, totalCartCount, updateCartCount, toggleWishlist } = useCart();
+  const { productCounts, wishlist, totalCartCount, updateCartCount, toggleWishlist } = useCart();
   const [products, setProducts] = useState<ProductCardProps[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");  
-  const [selectedPriceRange, setSelectedPriceRange] = useState<string>('');  
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [selectedPriceRange, setSelectedPriceRange] = useState<string>('');
+  const [isClient, setIsClient] = useState(false);  
   const images = ['/images/slide1.jpg', '/images/slide2.jpg', '/images/slide3.png', '/images/slide4.jpg'];
   const imageWidth = 1920;
   const imageHeight = 750;
+
+   useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -23,10 +28,10 @@ const HomePage = () => {
     getProducts();
   }, []);
 
-   const filteredProducts = products.filter(product => {
-     const isCategoryMatch = selectedCategory === "All Categories" || product.category === selectedCategory;
+  const filteredProducts = products.filter(product => {
+    const isCategoryMatch = selectedCategory === "All Categories" || product.category === selectedCategory;
 
-     let isPriceMatch = true;
+    let isPriceMatch = true;
     if (selectedPriceRange === '0-50') {
       isPriceMatch = product.price >= 0 && product.price <= 50;
     } else if (selectedPriceRange === '51-100') {
@@ -39,6 +44,10 @@ const HomePage = () => {
 
     return isCategoryMatch && isPriceMatch;
   });
+
+  if (!isClient) {
+     return null; 
+  }
 
   return (
     <div>

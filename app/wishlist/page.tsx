@@ -2,24 +2,12 @@
 import React from "react";
 import { useCart } from "@/contexts/CartContext";
 import { ArrowLeft, HeartCrack } from "lucide-react";
-import { useEffect, useState } from "react";
-import { fetchProducts } from "@/lib/fetchProducts";
 import ProductCard from "@/components/ProductCard";
 import { useRouter } from 'next/navigation'; 
 
 const WishList = () => {
   const { productCounts, wishlist, totalCartCount, updateCartCount, toggleWishlist } = useCart();
-  const [products, setProducts] = useState<ProductCardProps[]>([]);
   const router = useRouter();  
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const data = await fetchProducts();
-      setProducts(data);
-    };
-    getProducts();
-  }, []);
-
   return (
     <div className=" px-10">
       <button

@@ -1,3 +1,5 @@
+
+
 export const fetchProducts = async (): Promise<ProductCardProps[]> => {
       try {
         const res = await fetch("https://fakestoreapi.com/products");
@@ -6,8 +8,13 @@ export const fetchProducts = async (): Promise<ProductCardProps[]> => {
         }
         const data: ProductCardProps[] = await res.json();
         return data;
-      } catch (error: any) {
-        throw new Error(error.message || "Something went wrong");
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          throw new Error(error.message || "Something went wrong");
+        } else {
+          throw new Error("Something went wrong");
+        }
       }
+      
     };
     
